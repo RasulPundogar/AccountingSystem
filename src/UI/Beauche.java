@@ -20,4 +20,8 @@ public class Beauche {
     public void Firstname(){
     //Blah Blah Blah
     }
+    
+    public void print(){
+        //bleh bleh bleh
+    }
 }
