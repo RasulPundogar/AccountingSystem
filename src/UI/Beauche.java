@@ -17,4 +17,7 @@ public class Beauche {
         // TODO code application logic here
         MDIFrame.main(args);
     }
+    public void Firstname(){
+    //Blah Blah Blah
+    }
 }
