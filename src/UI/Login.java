@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 package UI;
-
+import java.sql.*;
+import libraries.database;
 /**
  *
  * @author Happi6
  */
 public class Login extends javax.swing.JInternalFrame {
-
+    database data = new database();
+    ResultSet rs = null;
     /**
      * Creates new form Login
      */
@@ -98,10 +100,24 @@ public class Login extends javax.swing.JInternalFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
-        this.frame.updateUserAction();
-        //this.frame.setVisiblePanel(true);
-        System.out.println("Login successful.");
-        this.dispose();       
+       // this.frame.updateUserAction();
+        
+        String uname = this.username.getText();
+        String upass = this.password.getText();
+        try{
+            rs = data.select("SELECT * FROM tbl_accounts WHERE acct_uname = '"+ uname +"' AND acct_upass = '"+ upass +"'");
+        
+            if(rs.next()){
+                System.out.println("Login successful.");
+            }else{
+                System.out.println("Login unsuccessful.");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        };
+        
+        
+      //  this.dispose();       
     }//GEN-LAST:event_btn_loginActionPerformed
 
 
