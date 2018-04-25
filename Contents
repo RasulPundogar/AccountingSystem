@@ -1,0 +1,38 @@
+Payroll
+	enroll employee
+	view employee
+	manage employees
+	Payslip
+	Basic Pay Summary
+	Governement Contributions Summary
+	On-hold salaries summary
+sales
+	Daily Sales
+		User
+		Dealer
+	Sales Report
+		Monthly
+		Annual
+expense
+	Petty Cash
+	Expenses
+		Operation
+		Administrative
+	View expenses summary
+Inventory
+	Manage Branches
+	Manage products
+		Incoming
+		Pullout
+	Daily Report
+	Master Inventory + Floating Stocks
+Finance
+	Sales
+	COGS
+	Financial Statement
+	BIR/Legal
+		Tax Computations
+	Deposit
+System Accounts
+	Manage users
+	
