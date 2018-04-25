@@ -406,7 +406,7 @@ public class MDIFrame extends javax.swing.JFrame {
 
     private void viewBranchesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBranchesMenuItemActionPerformed
         // TODO add your handling code here:
-        desktopPane.add(viewBranch = new UI.Branch.View(this));
+        desktopPane.add(viewBranch = new UI.Branch.Manage(this));
         viewBranch.setVisible(true);
     }//GEN-LAST:event_viewBranchesMenuItemActionPerformed
 
@@ -568,7 +568,7 @@ public class MDIFrame extends javax.swing.JFrame {
     //UI.Branch
     private UI.Branch.Create createBranch;
     private UI.Branch.Update updateBranch;
-    private UI.Branch.View viewBranch;
+    private UI.Branch.Manage viewBranch;
     //UI.User
     private UI.User.Create createUser;
     private UI.User.Update updateUser;

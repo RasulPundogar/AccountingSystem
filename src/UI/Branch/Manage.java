@@ -9,12 +9,12 @@ package UI.Branch;
  *
  * @author Ginno Padilla
  */
-public class View extends javax.swing.JInternalFrame {
+public class Manage extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form View
      */
-    public View(UI.MDIFrame frame) {
+    public Manage(UI.MDIFrame frame) {
         initComponents();
         initComboBox();
         this.frame = frame;
