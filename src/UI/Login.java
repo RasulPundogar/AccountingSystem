@@ -5,13 +5,15 @@
  */
 package UI;
 import java.sql.*;
-import libraries.database;
+import libraries.*;
+
 /**
  *
  * @author Happi6
  */
 public class Login extends javax.swing.JInternalFrame {
     database data = new database();
+    validation_object val = new validation_object();
     ResultSet rs = null;
     /**
      * Creates new form Login
@@ -102,20 +104,22 @@ public class Login extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
        // this.frame.updateUserAction();
         
-        String uname = this.username.getText();
-        String upass = this.password.getText();
-        try{
-            rs = data.select("SELECT * FROM tbl_accounts WHERE acct_uname = '"+ uname +"' AND acct_upass = '"+ upass +"'");
-        
-            if(rs.next()){
-                System.out.println("Login successful.");
-            }else{
-                System.out.println("Login unsuccessful.");
-            }
-            rs.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        };
+        String uname = val.check_name(this.username.getText());
+        System.out.println(uname);
+        String upass = val.prepare_data(this.password.getText());
+        System.out.println(upass);
+//        try{
+//            rs = data.select("SELECT * FROM tbl_accounts WHERE acct_uname = '"+ uname +"' AND acct_upass = '"+ upass +"'");
+//        
+//            if(rs.next()){
+//                System.out.println("Login successful.");
+//            }else{
+//                System.out.println("Login unsuccessful.");
+//            }
+//            rs.close();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        };
         
         
       //  this.dispose();       
