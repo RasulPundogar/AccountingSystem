@@ -5,8 +5,8 @@
  */
 package libraries;
 
-import com.sun.rowset.CachedRowSetImpl;
 import java.sql.*;
+
 
 /**
  *
@@ -32,10 +32,10 @@ public class index {
     }
     public void run (String[] args) throws Exception
     {
-        st = data.select("SELECT * FROM tbl_accounts");
+        st = data.select("SELECT * FROM tbl_branches");
         while(st.next()){
-            System.out.print(st.getString("acct_No"));
-            System.out.print(st.getString("acct_uname"));
+            System.out.print(st.getString("branch_No"));
+            System.out.print(st.getString("branch_name"));
         }
      //  System.out.print(val);
     }

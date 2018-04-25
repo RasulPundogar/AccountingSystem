@@ -112,6 +112,7 @@ public class Login extends javax.swing.JInternalFrame {
             }else{
                 System.out.println("Login unsuccessful.");
             }
+            rs.close();
         }catch(Exception e){
             e.printStackTrace();
         };

@@ -16,26 +16,16 @@ import java.sql.*;
  */
 public class database {
      database_connection con = new database_connection();
-     public String val ="";
-//     public String showText(){
-//        
-//        boolean connn = con.dbConnect("jdbc:sqlserver://localhost:1433;databaseName=DbAccounting","sa", "12345");
-//        if(connn){
-//        val= "Connected";
-//        }else{
-//        val= "Not connected";
-//        }
-//        return val;
-//     }
-     
+     private Connection conn = null;
+
      
     public ResultSet select(String queryStr) {
-    Connection conn = null;
+   
     Statement stmt = null;
     ResultSet resultSet = null;
     CachedRowSetImpl crs = null;
     try {
-        conn = con.dbConnect("jdbc:sqlserver://localhost:1433;databaseName=DbAccounting","sa", "12345");
+        conn = con.dbConnect("jdbc:sqlite:DbAccounting.db","sa", "12345");
         stmt = conn.createStatement();
         resultSet = stmt.executeQuery(queryStr);
 
