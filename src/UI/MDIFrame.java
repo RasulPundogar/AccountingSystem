@@ -84,6 +84,7 @@ public class MDIFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImages(null);
+        setPreferredSize(new java.awt.Dimension(1024, 700));
 
         salesButton.setText("New Transaction");
         salesButton.addActionListener(new java.awt.event.ActionListener() {
