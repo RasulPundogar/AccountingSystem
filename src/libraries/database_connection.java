@@ -15,7 +15,7 @@ public class database_connection {
     {
       Connection conn = null;
       try {
-         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+         Class.forName("org.sqlite.JDBC");
          conn = DriverManager.getConnection(db_connect_string,
                   db_userid, db_password);
          
