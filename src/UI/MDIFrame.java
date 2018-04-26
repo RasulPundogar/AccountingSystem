@@ -15,11 +15,15 @@ public class MDIFrame extends javax.swing.JFrame {
      * Creates new form MDIFrame
      */
     public MDIFrame() {
+        System.out.print("Initializing Components...");
         initComponents();
-        desktopPane.add(login = new Login(this));
-        login.setVisible(true);
+        System.out.println("Initialized.");
+        
+        desktopPane.add(loginUser = new UI.User.Login(this));
+        loginUser.setVisible(true);
         this.setVisiblePanel(false);
-        initEmployee();
+        
+        
     }
 
     /**
@@ -76,6 +80,9 @@ public class MDIFrame extends javax.swing.JFrame {
         pettyCashMenuItem = new javax.swing.JMenuItem();
         pettyReplenishmentMenuItem = new javax.swing.JMenuItem();
         pettyFundMenuItem = new javax.swing.JMenuItem();
+        InventoryMenu = new javax.swing.JMenu();
+        manageInventoryMenuItem = new javax.swing.JMenuItem();
+        masterInventoryMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -329,6 +336,26 @@ public class MDIFrame extends javax.swing.JFrame {
 
         menuBar.add(reportMenu);
 
+        InventoryMenu.setText("Inventory");
+
+        manageInventoryMenuItem.setText("Manage Inventory");
+        manageInventoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageInventoryMenuItemActionPerformed(evt);
+            }
+        });
+        InventoryMenu.add(manageInventoryMenuItem);
+
+        masterInventoryMenuItem.setText("Master Inventory");
+        masterInventoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                masterInventoryMenuItemActionPerformed(evt);
+            }
+        });
+        InventoryMenu.add(masterInventoryMenuItem);
+
+        menuBar.add(InventoryMenu);
+
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
 
@@ -364,8 +391,8 @@ public class MDIFrame extends javax.swing.JFrame {
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
         // TODO add your handling code here:
-        desktopPane.add(login = new Login(this));
-        login.setVisible(true);
+        desktopPane.add(loginUser = new UI.User.Login(this));
+        loginUser.setVisible(true);
         System.out.println("Logout successful.");
         this.setVisiblePanel(false);
     }//GEN-LAST:event_logoutMenuItemActionPerformed
@@ -424,7 +451,7 @@ public class MDIFrame extends javax.swing.JFrame {
 
     private void viewUsersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewUsersMenuItemActionPerformed
         // TODO add your handling code here:
-        desktopPane.add(viewUser = new UI.User.View(this));
+        desktopPane.add(viewUser = new UI.User.Manage(this));
         viewUser.setVisible(true);
     }//GEN-LAST:event_viewUsersMenuItemActionPerformed
 
@@ -436,13 +463,12 @@ public class MDIFrame extends javax.swing.JFrame {
 
     private void newSupplierMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSupplierMenuItemActionPerformed
         // TODO add your handling code here:
-        desktopPane.add(createSupplier = new UI.Supplier.Create(this));
-        createSupplier.setVisible(true);
+
     }//GEN-LAST:event_newSupplierMenuItemActionPerformed
 
     private void viewSuppliersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSuppliersMenuItemActionPerformed
         // TODO add your handling code here:
-        desktopPane.add(viewSupplier = new UI.Supplier.View(this));
+        desktopPane.add(viewSupplier = new UI.Product.Supplier(this));
         viewSupplier.setVisible(true);
     }//GEN-LAST:event_viewSuppliersMenuItemActionPerformed
 
@@ -474,6 +500,19 @@ public class MDIFrame extends javax.swing.JFrame {
         desktopPane.add(newSales = new UI.Sales.New());
         newSales.setVisible(true);
     }//GEN-LAST:event_salesButtonActionPerformed
+
+    private void manageInventoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageInventoryMenuItemActionPerformed
+        // TODO add your handling code here:
+        desktopPane.add(manageInventory = new UI.Inventory.Manage(this));
+        manageInventory.setVisible(true);
+    }//GEN-LAST:event_manageInventoryMenuItemActionPerformed
+
+    private void masterInventoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterInventoryMenuItemActionPerformed
+        // TODO add your handling code here:
+        desktopPane.add(masterInventory = new UI.Inventory.Master(this));
+        masterInventory.setVisible(true);
+        
+    }//GEN-LAST:event_masterInventoryMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -511,6 +550,7 @@ public class MDIFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu InventoryMenu;
     private javax.swing.JMenu ManageMenu;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu accountingMenu;
@@ -532,6 +572,8 @@ public class MDIFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JMenuItem logoutMenuItem;
+    private javax.swing.JMenuItem manageInventoryMenuItem;
+    private javax.swing.JMenuItem masterInventoryMenuItem;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem newBranchMenuItem;
     private javax.swing.JMenuItem newEmployeeMenuItem;
@@ -560,7 +602,6 @@ public class MDIFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem viewSuppliersMenuItem;
     private javax.swing.JMenuItem viewUsersMenuItem;
     // End of variables declaration//GEN-END:variables
-    private Login login;
     //UI.Employee
     private UI.Employee.Create createEmployee;
     private UI.Employee.Update updateEmployee;
@@ -570,20 +611,18 @@ public class MDIFrame extends javax.swing.JFrame {
     private UI.Branch.Update updateBranch;
     private UI.Branch.Manage viewBranch;
     //UI.User
+    private UI.User.Login loginUser;
     private UI.User.Create createUser;
     private UI.User.Update updateUser;
-    private UI.User.View viewUser;
+    private UI.User.Manage viewUser;
     //UI.Payroll
     private UI.Payroll.Manage managePayroll;
     private UI.Payroll.Summary summaryPayroll;
-    //UI.Supplier
-    private UI.Supplier.Create createSupplier;
-    private UI.Supplier.Update updateSupplier;
-    private UI.Supplier.View viewSupplier;
     //UI.Product
     private UI.Product.Create createProduct;
     private UI.Product.Manage manageProduct;
     private UI.Product.Update updateProduct;
+    private UI.Product.Supplier viewSupplier;
     //UI.PettyCash
     private UI.PettyCash.Setup setupPettyCash;
     private UI.PettyCash.Fund fundPettyCash;
@@ -593,13 +632,14 @@ public class MDIFrame extends javax.swing.JFrame {
     private UI.Sales.Manage manageSales;
     private UI.Sales.Summary summarySales;
     private UI.Sales.Deposit depositSales;
+    //UI.Inventory
+    private UI.Inventory.Manage manageInventory;
+    private UI.Inventory.Master masterInventory;
+    //System variables
+    private String username;
     
     public void setVisiblePanel(boolean val){
         this.desktopPanel.setVisible(val);
-    }
-    
-    protected void initEmployee(){
-        System.out.println("Employee initialized.");
     }
     
     public void updateEmployeeAction(){
@@ -612,13 +652,24 @@ public class MDIFrame extends javax.swing.JFrame {
         updateBranch.setVisible(true);
     }
 
-    public void updateSupplierAction() {
-        desktopPane.add(updateSupplier = new UI.Supplier.Update());
-        updateSupplier.setVisible(true);
-    }
-
     public void updateUserAction() {
         desktopPane.add(updateUser = new UI.User.Update(this));
         updateUser.setVisible(true);
+    }
+    public void addToDesktopPane(java.awt.Component cmpnt){
+        desktopPane.add(cmpnt);
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
+        System.out.println(this.username);
+    }
+    
+    public String getUsername(){
+        return this.username;
+    }
+    
+    public void hideAllFrames(){
+        
     }
 }

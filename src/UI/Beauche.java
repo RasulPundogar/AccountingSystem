@@ -16,12 +16,15 @@ public class Beauche {
     public static void main(String[] args) {
         // TODO code application logic here
         MDIFrame.main(args);
-    }
-    public void Firstname(){
-    //Blah Blah Blah
-    }
-    
-    public void print(){
-        //bleh bleh bleh
+        System.out.print("Initializing Systems...");
+        // TODO code for initial system check
+        System.out.println("Initialized.");
+        System.out.print("Initializing Databases...");
+        // TODO code for database check
+        System.out.println("Initialized.");
+        System.out.print("Initializing Modules...");
+        // TODO code for loading modules
+        System.out.println("Initialized.");
+        System.out.println("Starting...");
     }
 }

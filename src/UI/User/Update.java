@@ -17,7 +17,10 @@ public class Update extends javax.swing.JInternalFrame {
     public Update(UI.MDIFrame frame) {
         this.frame = frame;
         initComponents();
-    }
+        System.out.println(frame.getUsername());
+        this.usernameLabel.setText(frame.getUsername());
+
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,24 +31,21 @@ public class Update extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        idTextField = new javax.swing.JTextField();
-        nameTextField = new javax.swing.JTextField();
-        usernameTextField = new javax.swing.JTextField();
         oldPasswordField = new javax.swing.JPasswordField();
         newPasswordField = new javax.swing.JPasswordField();
         confirmPasswordField = new javax.swing.JPasswordField();
         clearButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
 
         setClosable(true);
-
-        jLabel1.setText("Employee ID");
+        setTitle("Update User Password");
 
         jLabel2.setText("Employee Name");
 
@@ -54,12 +54,6 @@ public class Update extends javax.swing.JInternalFrame {
         jLabel4.setText("New Password");
 
         jLabel5.setText("Confirm Password");
-
-        idTextField.setEditable(false);
-
-        nameTextField.setEditable(false);
-
-        usernameTextField.setEditable(false);
 
         clearButton.setText("Clear");
 
@@ -72,6 +66,12 @@ public class Update extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Old Password");
 
+        nameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nameLabel.setText("Juan Dela Cruz");
+
+        usernameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        usernameLabel.setText("jCruz");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,45 +80,37 @@ public class Update extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addComponent(clearButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                        .addComponent(updateButton)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(updateButton))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usernameTextField)
-                            .addComponent(newPasswordField)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(newPasswordField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(oldPasswordField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(confirmPasswordField)
-                            .addComponent(oldPasswordField)
-                            .addComponent(idTextField)
-                            .addComponent(nameTextField))))
-                .addGap(33, 33, 33))
+                            .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(usernameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(nameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(usernameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(oldPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,7 +126,7 @@ public class Update extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateButton)
                     .addComponent(clearButton))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,26 +134,25 @@ public class Update extends javax.swing.JInternalFrame {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        
         this.frame.setVisiblePanel(true);
+        this.dispose();
     }//GEN-LAST:event_updateButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
     private javax.swing.JPasswordField confirmPasswordField;
-    private javax.swing.JTextField idTextField;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField nameTextField;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JPasswordField newPasswordField;
     private javax.swing.JPasswordField oldPasswordField;
     private javax.swing.JButton updateButton;
-    private javax.swing.JTextField usernameTextField;
+    private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
     private UI.MDIFrame frame;
 }
