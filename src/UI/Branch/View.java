@@ -4,13 +4,20 @@
  * and open the template in the editor.
  */
 package UI.Branch;
+import libraries.*;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+import javax.swing.table.*;
 /**
  *
  * @author Ginno Padilla
  */
 public class View extends javax.swing.JInternalFrame {
-
+    admin_object admin = new admin_object();
+    String branchNo;
     /**
      * Creates new form View
      */
@@ -38,6 +45,7 @@ public class View extends javax.swing.JInternalFrame {
         refreshButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btn_search = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -62,6 +70,11 @@ public class View extends javax.swing.JInternalFrame {
         });
         jTable1.setColumnSelectionAllowed(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
@@ -69,6 +82,12 @@ public class View extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
         }
+
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyTyped(evt);
+            }
+        });
 
         sortComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         sortComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +121,13 @@ public class View extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Sort by");
 
+        btn_search.setText("Search");
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,10 +150,12 @@ public class View extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_search)
+                        .addGap(24, 24, 24)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(sortComboBox, 0, 102, Short.MAX_VALUE)
+                        .addComponent(sortComboBox, 0, 110, Short.MAX_VALUE)
                         .addGap(18, 18, 18))))
         );
         layout.setVerticalGroup(
@@ -138,7 +166,8 @@ public class View extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(sortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_search))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,14 +175,56 @@ public class View extends javax.swing.JInternalFrame {
                     .addComponent(updateButton)
                     .addComponent(deleteButton)
                     .addComponent(refreshButton))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void display_branches() throws SQLException{
+        ResultSet rs = admin.get_branches();
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        Object[] row = new Object[3];
+        try {
+            while(rs.next()){
+                row[0] = rs.getString("branch_No");
+                row[1] = rs.getString("branch_name");
+                row[2] = rs.getString("branch_address");
+                model.addRow(row);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     public void display_branch() throws SQLException{
+            ResultSet rs = null;                      
+            String no = nameTextField.getText();
+            rs = admin.get_branches_no(no, "SM Baguio");
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            Object[] row = new Object[3];
+            try { 
+                if(rs.next()){
+                    row[0] = rs.getString("branch_No");
+                    row[1] = rs.getString("branch_name");
+                    row[2] = rs.getString("branch_address");
+                    model.addRow(row);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+            display_branches();
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void sortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortComboBoxActionPerformed
@@ -161,7 +232,16 @@ public class View extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_sortComboBoxActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String result = admin.delete_branch(branchNo);
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+            display_branches();
+            JOptionPane.showMessageDialog(null, result);
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -169,8 +249,36 @@ public class View extends javax.swing.JInternalFrame {
         frame.updateBranchAction();
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    private void nameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyTyped
+      
+    }//GEN-LAST:event_nameTextFieldKeyTyped
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.setRowCount(0);
+        try {
+            if(nameTextField.getText().isEmpty()){
+                display_branches();
+            }else{
+                display_branch();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+             
+        }
+    }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+       
+        int i = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        branchNo  = model.getValueAt(i,0).toString();
+      
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_search;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
