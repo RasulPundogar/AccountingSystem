@@ -9,12 +9,12 @@ package UI.User;
  *
  * @author Ginno Padilla
  */
-public class View extends javax.swing.JInternalFrame {
+public class Manage extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form View
      */
-    public View(UI.MDIFrame frame) {
+    public Manage(UI.MDIFrame frame) {
         this.frame = frame;
         initComponents();
         initComboBox();
@@ -36,10 +36,15 @@ public class View extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         refreshButton = new javax.swing.JButton();
-        resetButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        newButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
 
         setClosable(true);
+        setResizable(true);
+        setTitle("Manage User Accounts");
+        setToolTipText("");
+        setMinimumSize(new java.awt.Dimension(700, 450));
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,9 +86,22 @@ public class View extends javax.swing.JInternalFrame {
 
         refreshButton.setText("Refresh");
 
-        resetButton.setText("Reset Password");
-
         deleteButton.setText("Delete");
+
+        newButton.setText("New");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
+
+        updateButton.setText("Deactivate");
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,26 +111,27 @@ public class View extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(newButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(sortComboBox, 0, 179, Short.MAX_VALUE)
-                                .addGap(20, 20, 20)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(refreshButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resetButton)
-                        .addGap(25, 25, 25))))
+                                .addComponent(sortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,14 +142,15 @@ public class View extends javax.swing.JInternalFrame {
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(sortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newButton)
+                    .addComponent(updateButton)
                     .addComponent(refreshButton)
-                    .addComponent(resetButton)
                     .addComponent(deleteButton))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -140,6 +160,21 @@ public class View extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_sortComboBoxActionPerformed
 
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        // TODO add your handling code here:
+        Create createUser = new Create(frame);
+        frame.addToDesktopPane(createUser);
+        createUser.setVisible(true);
+        
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+        Update updateUser = new Update(frame);
+        frame.addToDesktopPane(updateUser);
+        updateUser.setVisible(true);
+    }//GEN-LAST:event_updateButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -147,12 +182,14 @@ public class View extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameTextField;
+    private javax.swing.JButton newButton;
     private javax.swing.JButton refreshButton;
-    private javax.swing.JButton resetButton;
     private javax.swing.JComboBox<String> sortComboBox;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private UI.MDIFrame frame;
+    private String selected;
     
     private void initComboBox(){
         sortComboBox.removeAllItems();
