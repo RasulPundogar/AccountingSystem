@@ -4,13 +4,19 @@
  * and open the template in the editor.
  */
 package UI.Branch;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import libraries.*;
 
 /**
  *
  * @author Ginno Padilla
  */
 public class Manage extends javax.swing.JInternalFrame {
-
+    admin_object admin = new admin_object();
     /**
      * Creates new form View
      */
@@ -19,7 +25,41 @@ public class Manage extends javax.swing.JInternalFrame {
         initComboBox();
         this.frame = frame;
     }
-
+    public void display_branches() throws SQLException{
+        ResultSet rs = admin.get_branches();
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        Object[] row = new Object[3];
+        try {
+            while(rs.next()){
+                row[0] = rs.getString("branch_No");
+                row[1] = rs.getString("branch_name");
+                row[2] = rs.getString("branch_address");
+                model.addRow(row);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     public void display_branch() throws SQLException{
+            ResultSet rs = null;                      
+            String no = nameTextField.getText();
+            rs = admin.get_branches_no(no, "SM Baguio");
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            Object[] row = new Object[3];
+            try { 
+                if(rs.next()){
+                    row[0] = rs.getString("branch_No");
+                    row[1] = rs.getString("branch_name");
+                    row[2] = rs.getString("branch_address");
+                    model.addRow(row);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +214,13 @@ public class Manage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        model.setRowCount(0);
+        try {
+            display_branches();
+        } catch (SQLException ex) {
+            Logger.getLogger(Manage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void sortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortComboBoxActionPerformed
