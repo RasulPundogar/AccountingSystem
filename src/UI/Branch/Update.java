@@ -4,13 +4,17 @@
  * and open the template in the editor.
  */
 package UI.Branch;
-
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import libraries.*;
 /**
  *
  * @author Ginno Padilla
  */
 public class Update extends javax.swing.JInternalFrame {
-
+    admin_object admin = new admin_object();
     /**
      * Creates new form Update
      */
@@ -119,7 +123,16 @@ public class Update extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+            String branchNo = "Sample";
+            String branchName = nameTextField.getText();
+            String branchAddress = locationTextField.getText();
+            String msg = "Inserted";
+        try { 
+            String result = admin.update_branch(branchNo,branchName,branchAddress,"Sample","Sample",msg);
+            JOptionPane.showMessageDialog(null, result);
+        } catch (SQLException ex) {
+            Logger.getLogger(Create.class.getName()).log(Level.SEVERE, null, ex);
+        }
         clear();
     }//GEN-LAST:event_updateButtonActionPerformed
 

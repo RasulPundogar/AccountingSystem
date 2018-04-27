@@ -4,14 +4,19 @@
  * and open the template in the editor.
  */
 package UI.Branch;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import libraries.*;
 /**
  *
  * @author Ginno Padilla
  */
 public class Create extends javax.swing.JInternalFrame {
-
-    
+    admin_object admin = new admin_object();
+    validation_object val = new validation_object();
 
     /**
      * Creates new form Create
@@ -55,6 +60,11 @@ public class Create extends javax.swing.JInternalFrame {
         });
 
         createButton.setText("Create");
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear");
 
@@ -109,6 +119,20 @@ public class Create extends javax.swing.JInternalFrame {
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTextFieldActionPerformed
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+      
+            String branchNo = idTextField.getText();
+            String branchName = nameTextField.getText();
+            String branchAddress = locationTextField.getText();
+            String msg = "Inserted";
+        try { 
+            String result = admin.new_branch(branchNo,branchName,branchAddress,"Sample","Sample",msg);
+            JOptionPane.showMessageDialog(null, result);
+        } catch (SQLException ex) {
+            Logger.getLogger(Create.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_createButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

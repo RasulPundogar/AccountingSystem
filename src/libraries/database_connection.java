@@ -11,25 +11,19 @@ import java.sql.*;
  * @author Rasul-PC
  */
 public class database_connection {
-    public Connection dbConnect(String db_connect_string,String db_userid,String db_password)
-    {
-      Connection conn = null;
-      try {
-         Class.forName("org.sqlite.JDBC");
-         conn = DriverManager.getConnection(db_connect_string,
-                  db_userid, db_password);
-         
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return conn;
-   }
-
-//   public static void main(String[] args)
-//   {
-//      database_connection connServer = new database_connection();
-//      boolean samp = connServer.dbConnect("jdbc:sqlserver://localhost:1433;databaseName=DbAccounting;","sa", "12345");
-//      System.out.print(samp);
-//   }
+    //database data = new database_2();
+    database data;
+    public Connection con = null;
     
+    public database_connection(){
+        String db_url = "jdbc:sqlite:DbAccounting.db";
+        String db_uname = "sa";
+        String db_upass = "12345";
+        
+        data = new database(db_url,db_uname,db_upass);
+        this.con = data.connect();
+    }
+
+    
+
 }

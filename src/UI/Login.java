@@ -12,7 +12,7 @@ import libraries.*;
  * @author Happi6
  */
 public class Login extends javax.swing.JInternalFrame {
-    database data = new database();
+    admin_object admin = new admin_object();
     validation_object val = new validation_object();
     ResultSet rs = null;
     /**

@@ -13,7 +13,8 @@ import java.sql.*;
  * @author Rasul-PC
  */
 public class index {
-    database data = new database();
+    admin_object admin = new admin_object();
+    
     ResultSet st = null;
     //String val = data.showText();
     /**
@@ -32,11 +33,15 @@ public class index {
     }
     public void run (String[] args) throws Exception
     {
-        st = data.select("SELECT * FROM tbl_branches");
-        while(st.next()){
-            System.out.print(st.getString("branch_No"));
-            System.out.print(st.getString("branch_name"));
-        }
-     //  System.out.print(val);
+//        Connection con = admin.db.con;
+//        String query="select * from tbl_branches where branch_No=:code or branch_name=:name";
+//        String[] val = new String[]{"Baguio001","SM Baguio"} ;
+//        
+//       database p=new database();
+//        
+//        ResultSet rs= p.executeSqlQuery(con, query,val);
+//        while(rs.next()){
+//            System.out.println(rs.getString("branch_No"));
+//        }
     }
 }
