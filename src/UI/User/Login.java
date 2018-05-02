@@ -5,14 +5,18 @@
  */
 package UI.User;
 import UI.MDIFrame;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
-import libraries.database;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import libraries.*;
 /**
  *
  * @author Happi6
  */
 public class Login extends javax.swing.JInternalFrame {
-    database data = new database();
+    admin_object admin = new admin_object();
     ResultSet rs = null;
     /**
      * Creates new form Login
@@ -105,6 +109,20 @@ public class Login extends javax.swing.JInternalFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
+        String uname = this.username.getText();
+        String upass = this.password.getText();
+        String result = "";
+        try {
+           result = admin.get_user(uname, upass);
+           System.out.println(result);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         /*
         String uname = this.username.getText();
         String upass = this.password.getText();
@@ -127,9 +145,9 @@ public class Login extends javax.swing.JInternalFrame {
         frame.setUsername(this.username.getText());
         
         // If first time logging in
-        Update update = new Update(frame);
-        frame.addToDesktopPane(update);
-        update.setVisible(true);
+//        Update update = new Update(frame);
+//        frame.addToDesktopPane(update);
+//        update.setVisible(true);
         
         // else user enters system.
         
