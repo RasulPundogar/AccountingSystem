@@ -19,7 +19,7 @@ public class index {
     //String val = data.showText();
     /**
      * @param args the command line arguments
-     */
+     */ 
     public static void main(String[] args) {
         try
         {
@@ -31,8 +31,27 @@ public class index {
             e.printStackTrace ();
         }
     }
+    
     public void run (String[] args) throws Exception
     {
+           // ------------------------- FOR PASSWORD HASHING AND SALTING ------------------------------------
+          String pass = admin.hash_password("12345");
+          System.out.println(pass);
+          System.out.println("------------------------------------------------------------------------------");
+          String pass2 = admin.hash_password("sample");
+          System.out.println(pass2);
+          System.out.println("------------------------------------------------------------------------------");
+          System.out.println(admin.validate_password("Sample","sample"));
+          
+           System.out.println("--------------------------------------------------------------------------------------------------");
+                System.out.println(admin.db.data.to_hex("Sample"));
+         
+            System.out.println("--------------------------------------------------------------------------------------------------");
+                System.out.println(admin.db.data.from_hex("Sample"));
+                
+                
+          // ------------------------- FOR PASSWORD HASHING AND SALTING ------------------------------------
+          
 //        Connection con = admin.db.con;
 //        String query="select * from tbl_branches where branch_No=:code or branch_name=:name";
 //        String[] val = new String[]{"Baguio001","SM Baguio"} ;

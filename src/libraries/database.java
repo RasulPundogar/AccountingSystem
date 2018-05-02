@@ -5,21 +5,36 @@
  */
 package libraries;
 import com.sun.rowset.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import java.util.logging.*;
+
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
+
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
+//import java.sql.Timestamp;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.Iterator;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 /**
  *
  * @author Rasul-PC
@@ -427,4 +442,133 @@ statement;
     public int[] executeBatch() throws SQLException {
         return statement.executeBatch();
     }
+    
+    
+    /**
+     Create a hashing and salting for the password
+     * @param pass this will be the storage of the password of the user
+     * @return this will return a string with a generated hash password
+     * @throws java.security.NoSuchAlgorithmException to allow the algorithms used in this function.
+     * @throws java.security.spec.InvalidKeySpecException 
+     */
+    public String generateHash(String pass) throws NoSuchAlgorithmException, InvalidKeySpecException{
+        String hash = generateStrongPasswordHash(pass); 
+        return hash;
+    }
+    
+    public boolean validate(String pass,String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException{
+        
+        Boolean matched = false;
+        matched = validatePassword(pass,storedPassword);
+        return matched;
+        
+    }
+    
+    // YOU STOP HERE, YOU CANNOT CREATE A LOGIN PROGRAMME
+    public byte[] from_hex(String password) throws NoSuchAlgorithmException{ 
+        return fromHex(password); 
+    }
+    public String to_hex(String password) throws NoSuchAlgorithmException{
+        return toHex(password.getBytes()); 
+    }
+    
+    private static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
+	{
+		String[] parts = storedPassword.split(":");
+		int iterations = Integer.parseInt(parts[0]);
+		byte[] salt = fromHex(parts[1]);
+		byte[] hash = fromHex(parts[2]);
+		
+		PBEKeySpec spec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
+		
+		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		
+		byte[] testHash = skf.generateSecret(spec).getEncoded();
+		
+		int diff = hash.length ^ testHash.length;
+		
+		for(int i = 0; i < hash.length && i < testHash.length; i++)
+		{
+			diff |= hash[i] ^ testHash[i];
+		}
+		
+		return diff == 0;
+	}
+	
+	private static String generateStrongPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
+	{
+		int iterations = 1000;
+		char[] chars = password.toCharArray();
+		byte[] salt = getSalt().getBytes();
+		
+		PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
+		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		byte[] hash = skf.generateSecret(spec).getEncoded();
+		return iterations + ":" + toHex(salt) + ":" + toHex(hash);
+				
+	}
+	
+	private static String getSalt() throws NoSuchAlgorithmException
+	{
+		SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+		byte[] salt = new byte[16];
+		sr.nextBytes(salt);
+		return salt.toString();
+	}
+	
+	private static String toHex(byte[] array) throws NoSuchAlgorithmException
+	{
+		BigInteger bi = new BigInteger(1, array);
+		String hex = bi.toString(16);
+		int paddingLength = (array.length * 2) - hex.length();
+		if(paddingLength > 0)
+		{
+			return String.format("%0"  +paddingLength + "d", 0) + hex;
+		}else{
+			return hex;
+		}
+	}
+	
+	private static byte[] fromHex(String hex) throws NoSuchAlgorithmException
+	{
+		byte[] bytes = new byte[hex.length() / 2];
+		for(int i = 0; i<bytes.length ;i++)
+		{
+			bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+		}
+		return bytes;
+	}
+//    private static String generateStorngPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
+//    {
+//        int iterations = 1000;
+//        char[] chars = password.toCharArray();
+//        byte[] salt = getSalt();
+//         
+//        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
+//        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//        byte[] hash = skf.generateSecret(spec).getEncoded();
+//        return iterations + ":" + toHex(salt) + ":" + toHex(hash);
+//    }
+//     
+//    private static byte[] getSalt() throws NoSuchAlgorithmException
+//    {
+//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+//        byte[] salt = new byte[16];
+//        sr.nextBytes(salt);
+//        return salt;
+//    }
+//     
+//    private static String toHex(byte[] array) throws NoSuchAlgorithmException
+//    {
+//        BigInteger bi = new BigInteger(1, array);
+//        String hex = bi.toString(16);
+//        int paddingLength = (array.length * 2) - hex.length();
+//        if(paddingLength > 0)
+//        {
+//            return String.format("%0"  +paddingLength + "d", 0) + hex;
+//        }else{
+//            return hex;
+//        }
+//    }
+     
 }
