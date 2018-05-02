@@ -1,7 +1,11 @@
 package libraries;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,5 +61,16 @@ public class admin_object {
     public String delete_branch(String branchNo) throws SQLException{
        values = new String[]{branchNo};
        return db.data.delete_data("DELETE FROM tbl_branches WHERE branch_No =:bRan",values);
+    }
+    public String hash_password(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
+        String generatedHash = null;
+        generatedHash = db.data.generateHash(password);
+        return generatedHash;
+    }
+    public boolean validate_password(String password,String storedpass) throws NoSuchAlgorithmException, InvalidKeySpecException{
+        boolean matched = false;
+        matched = db.data.validate(password,storedpass);
+        return matched;
+       
     }
 }

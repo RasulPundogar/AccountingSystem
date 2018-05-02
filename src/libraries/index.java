@@ -33,6 +33,17 @@ public class index {
     }
     public void run (String[] args) throws Exception
     {
+           // ------------------------- FOR PASSWORD HASHING AND SALTING ------------------------------------
+          String pass = admin.hash_password("Password");
+          System.out.println(pass);
+          System.out.println("------------------------------------------------------------------------------");
+          String pass2 = admin.hash_password("Sample");
+          System.out.println(pass2);
+          System.out.println("------------------------------------------------------------------------------");
+          System.out.println(admin.validate_password("Sample","sample"));
+          
+          // ------------------------- FOR PASSWORD HASHING AND SALTING ------------------------------------
+          
 //        Connection con = admin.db.con;
 //        String query="select * from tbl_branches where branch_No=:code or branch_name=:name";
 //        String[] val = new String[]{"Baguio001","SM Baguio"} ;
